@@ -1,0 +1,27 @@
+{
+  "name": "social-engineering-demo",
+  "version": "1.0.0",
+  "description": "Demonstração educacional sobre vulnerabilidades de engenharia social",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "preview": "python3 -m http.server 3000",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "cybersecurity",
+    "social-engineering",
+    "education",
+    "awareness",
+    "security-training"
+  ],
+  "author": "Cybersecurity Education Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cybersec-education/social-engineering-demo"
+  },
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  }
+}
