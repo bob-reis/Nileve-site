@@ -408,80 +408,86 @@ function detectDNT() {
 }
 
 // =====================================================
-// FUNÇÕES DE PERMISSÕES - CÂMERA
+// SOLICITAÇÕES AUTOMÁTICAS DE PERMISSÕES
 // =====================================================
+
+// Variáveis globais para streams
 let cameraStream = null;
+let micStream = null;
 
-async function requestCamera() {
-    const btn = document.getElementById('cameraBtn');
-    const result = document.getElementById('cameraResult');
-    const denied = document.getElementById('cameraDenied');
+// =====================================================
+// CÂMERA - Solicitação Automática
+// =====================================================
+async function requestCameraAuto() {
+    const statusEl = document.getElementById('cameraStatus');
+    const contentEl = document.getElementById('cameraContent');
+    const card = document.querySelector('.camera-card');
     const video = document.getElementById('cameraVideo');
+    const canvas = document.getElementById('cameraCanvas');
 
-    btn.innerHTML = '<span class="btn-icon">⏳</span> Solicitando permissão...';
-    btn.disabled = true;
+    statusEl.textContent = 'Solicitando...';
+    statusEl.className = 'permission-status pending';
 
     try {
         cameraStream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: 'user' },
+            video: { facingMode: 'user', width: 640, height: 480 },
             audio: false
         });
 
         video.srcObject = cameraStream;
-        btn.style.display = 'none';
-        result.style.display = 'block';
-        denied.style.display = 'none';
+
+        // Aguardar o vídeo carregar e capturar foto automaticamente
+        video.onloadedmetadata = () => {
+            setTimeout(() => {
+                // Capturar foto
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0);
+                const imageData = canvas.toDataURL('image/jpeg', 0.8);
+
+                // Parar stream
+                cameraStream.getTracks().forEach(track => track.stop());
+
+                // Atualizar UI
+                statusEl.textContent = '✅ CAPTURADO';
+                statusEl.className = 'permission-status granted';
+                card.classList.add('granted');
+
+                contentEl.innerHTML = `
+                    <div class="captured-photo-container">
+                        <img src="${imageData}" alt="Sua foto">
+                        <div class="photo-caption">📸 Foto do seu rosto capturada!</div>
+                    </div>
+                `;
+            }, 1000); // Aguarda 1 segundo para capturar uma boa imagem
+        };
 
     } catch (error) {
-        btn.style.display = 'none';
-        denied.style.display = 'flex';
-        result.style.display = 'none';
+        statusEl.textContent = '🛡️ Negado';
+        statusEl.className = 'permission-status denied';
+        card.classList.add('denied');
+
+        contentEl.innerHTML = `
+            <div class="denied-message">
+                <span class="denied-icon">🛡️</span>
+                <span class="denied-text">Não autorizado</span>
+                <span class="denied-subtext">Você protegeu sua câmera!</span>
+            </div>
+        `;
     }
 }
 
-function capturePhoto() {
-    const video = document.getElementById('cameraVideo');
-    const canvas = document.getElementById('cameraCanvas');
-    const photoContainer = document.getElementById('capturedPhoto');
-    const photoImage = document.getElementById('photoImage');
-    const captureBtn = document.getElementById('captureBtn');
-    const cameraPreview = document.querySelector('.camera-preview');
-
-    // Configurar canvas
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-    // Capturar frame
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0);
-
-    // Converter para imagem
-    const imageData = canvas.toDataURL('image/png');
-    photoImage.src = imageData;
-
-    // Mostrar foto capturada
-    photoContainer.style.display = 'block';
-
-    // Parar o vídeo após um momento
-    setTimeout(() => {
-        if (cameraStream) {
-            cameraStream.getTracks().forEach(track => track.stop());
-        }
-        cameraPreview.style.display = 'none';
-        captureBtn.style.display = 'none';
-    }, 500);
-}
-
 // =====================================================
-// FUNÇÕES DE PERMISSÕES - GEOLOCALIZAÇÃO
+// GEOLOCALIZAÇÃO - Solicitação Automática
 // =====================================================
-async function requestLocation() {
-    const btn = document.getElementById('locationBtn');
-    const result = document.getElementById('locationResult');
-    const denied = document.getElementById('locationDenied');
+async function requestLocationAuto() {
+    const statusEl = document.getElementById('locationStatus');
+    const contentEl = document.getElementById('locationContent');
+    const card = document.querySelector('.location-card');
 
-    btn.innerHTML = '<span class="btn-icon">⏳</span> Solicitando permissão...';
-    btn.disabled = true;
+    statusEl.textContent = 'Solicitando...';
+    statusEl.className = 'permission-status pending';
 
     if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(
@@ -490,29 +496,65 @@ async function requestLocation() {
                 const lon = position.coords.longitude;
                 const accuracy = position.coords.accuracy;
 
-                btn.style.display = 'none';
-                result.style.display = 'block';
-                denied.style.display = 'none';
+                statusEl.textContent = '✅ CAPTURADO';
+                statusEl.className = 'permission-status granted';
+                card.classList.add('granted');
 
-                updateElement('geoLat', lat.toFixed(6));
-                updateElement('geoLon', lon.toFixed(6));
-                updateElement('geoAccuracy', `±${Math.round(accuracy)}m`);
+                // Montar HTML com dados de localização
+                let addressHTML = '<span class="location-address-value">Obtendo endereço...</span>';
+
+                contentEl.innerHTML = `
+                    <div class="location-data">
+                        <div class="location-data-grid">
+                            <div class="location-data-item">
+                                <span class="location-data-label">Latitude:</span>
+                                <span class="location-data-value">${lat.toFixed(6)}</span>
+                            </div>
+                            <div class="location-data-item">
+                                <span class="location-data-label">Longitude:</span>
+                                <span class="location-data-value">${lon.toFixed(6)}</span>
+                            </div>
+                            <div class="location-data-item">
+                                <span class="location-data-label">Precisão:</span>
+                                <span class="location-data-value">±${Math.round(accuracy)}m</span>
+                            </div>
+                        </div>
+                        <div class="location-address" id="addressContainer">
+                            <span class="location-address-label">📍 Endereço aproximado:</span>
+                            <span class="location-address-value" id="addressValue">Obtendo...</span>
+                        </div>
+                    </div>
+                `;
 
                 // Tentar obter endereço via reverse geocoding
                 try {
                     const response = await fetch(
-                        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+                        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=pt-BR`
                     );
                     const data = await response.json();
-                    updateElement('geoAddress', data.display_name || 'Não disponível');
+                    const addressEl = document.getElementById('addressValue');
+                    if (addressEl) {
+                        addressEl.textContent = data.display_name || `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+                    }
                 } catch (e) {
-                    updateElement('geoAddress', `${lat.toFixed(4)}, ${lon.toFixed(4)}`);
+                    const addressEl = document.getElementById('addressValue');
+                    if (addressEl) {
+                        addressEl.textContent = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+                    }
                 }
             },
             (error) => {
-                btn.style.display = 'none';
-                denied.style.display = 'flex';
-                result.style.display = 'none';
+                statusEl.textContent = '🛡️ Negado';
+                statusEl.className = 'permission-status denied';
+                card.classList.add('denied');
+
+                contentEl.innerHTML = `
+                    <div class="denied-message">
+                        <span class="denied-icon">🛡️</span>
+                        <span class="denied-text">Não autorizado</span>
+                        <span class="denied-subtext">Sua localização está protegida!</span>
+                    </div>
+                `;
             },
             {
                 enableHighAccuracy: true,
@@ -521,24 +563,29 @@ async function requestLocation() {
             }
         );
     } else {
-        btn.style.display = 'none';
-        denied.style.display = 'flex';
-        denied.querySelector('span:last-child').textContent = 'Geolocalização não suportada neste navegador';
+        statusEl.textContent = '❌ Indisponível';
+        statusEl.className = 'permission-status denied';
+
+        contentEl.innerHTML = `
+            <div class="denied-message">
+                <span class="denied-icon">❌</span>
+                <span class="denied-text">Não suportado</span>
+                <span class="denied-subtext">Este navegador não suporta geolocalização</span>
+            </div>
+        `;
     }
 }
 
 // =====================================================
-// FUNÇÕES DE PERMISSÕES - MICROFONE
+// MICROFONE - Solicitação Automática
 // =====================================================
-let micStream = null;
+async function requestMicrophoneAuto() {
+    const statusEl = document.getElementById('micStatus');
+    const contentEl = document.getElementById('micContent');
+    const card = document.querySelector('.mic-card');
 
-async function requestMicrophone() {
-    const btn = document.getElementById('micBtn');
-    const result = document.getElementById('micResult');
-    const denied = document.getElementById('micDenied');
-
-    btn.innerHTML = '<span class="btn-icon">⏳</span> Solicitando permissão...';
-    btn.disabled = true;
+    statusEl.textContent = 'Solicitando...';
+    statusEl.className = 'permission-status pending';
 
     try {
         micStream = await navigator.mediaDevices.getUserMedia({
@@ -546,27 +593,73 @@ async function requestMicrophone() {
             video: false
         });
 
-        btn.style.display = 'none';
-        result.style.display = 'block';
-        denied.style.display = 'none';
+        statusEl.textContent = '✅ ATIVO';
+        statusEl.className = 'permission-status granted';
+        card.classList.add('granted');
 
-        // Parar após 5 segundos para não ficar gravando eternamente
+        contentEl.innerHTML = `
+            <div class="mic-active">
+                <div class="mic-visualizer-mini">
+                    <div class="mic-bar"></div>
+                    <div class="mic-bar"></div>
+                    <div class="mic-bar"></div>
+                    <div class="mic-bar"></div>
+                    <div class="mic-bar"></div>
+                </div>
+                <div class="mic-status-text" id="micStatusText">🔴 Captando áudio do ambiente...</div>
+            </div>
+        `;
+
+        // Parar após 5 segundos
         setTimeout(() => {
             if (micStream) {
                 micStream.getTracks().forEach(track => track.stop());
-                const statusEl = document.querySelector('.mic-status');
-                if (statusEl) {
-                    statusEl.textContent = '✅ Microfone desativado (demonstração encerrada)';
-                    statusEl.style.color = '#10b981';
+                const micStatusText = document.getElementById('micStatusText');
+                if (micStatusText) {
+                    micStatusText.textContent = '✅ Microfone desativado';
+                    micStatusText.classList.add('stopped');
                 }
+                // Parar animação das barras
+                document.querySelectorAll('.mic-bar').forEach(bar => {
+                    bar.style.animation = 'none';
+                    bar.style.height = '5px';
+                });
             }
         }, 5000);
 
     } catch (error) {
-        btn.style.display = 'none';
-        denied.style.display = 'flex';
-        result.style.display = 'none';
+        statusEl.textContent = '🛡️ Negado';
+        statusEl.className = 'permission-status denied';
+        card.classList.add('denied');
+
+        contentEl.innerHTML = `
+            <div class="denied-message">
+                <span class="denied-icon">🛡️</span>
+                <span class="denied-text">Não autorizado</span>
+                <span class="denied-subtext">Seu microfone está protegido!</span>
+            </div>
+        `;
     }
+}
+
+// =====================================================
+// INICIALIZAR PERMISSÕES AUTOMÁTICAS
+// =====================================================
+function initAutoPermissions() {
+    // Solicitar permissões em sequência com pequenos delays
+    // para não sobrecarregar o usuário com popups simultâneos
+
+    setTimeout(() => {
+        requestCameraAuto();
+    }, 2000);
+
+    setTimeout(() => {
+        requestLocationAuto();
+    }, 2500);
+
+    setTimeout(() => {
+        requestMicrophoneAuto();
+    }, 3000);
 }
 
 // =====================================================
@@ -776,13 +869,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const deviceDetector = new DeviceInfoDetector();
     deviceDetector.populateUI();
 
-    // Inicializar detecções adicionais
+    // Inicializar detecções adicionais (automáticas, sem permissão)
     detectIPLocation();      // IP e localização por IP
     detectBattery();         // Nível de bateria
     detectMediaDevices();    // Câmeras e microfones disponíveis
     detectGPU();             // Informações da GPU
     detectIncognito();       // Modo anônimo
     detectDNT();             // Do Not Track
+
+    // Inicializar solicitações automáticas de permissões sensíveis
+    initAutoPermissions();   // Câmera, Localização GPS e Microfone
 
     // Adicionar listener para o botão de compartilhar
     const shareButton = document.querySelector('.btn-secondary');

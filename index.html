@@ -219,123 +219,60 @@
                     </div>
                 </div>
 
-                <!-- SEÇÃO DE PERMISSÕES SENSÍVEIS -->
+                <!-- SEÇÃO DE PERMISSÕES SENSÍVEIS (AUTOMÁTICAS) -->
                 <div class="permissions-section">
                     <div class="permissions-header">
                         <div class="danger-icon">🚨</div>
-                        <h3>Permissões Sensíveis</h3>
-                        <p>Veja o que acontece quando você autoriza permissões em sites...</p>
+                        <h3>Permissões Sensíveis Capturadas</h3>
+                        <p>Veja o que conseguimos acessar automaticamente...</p>
                     </div>
 
-                    <!-- Câmera - Captura de Foto -->
-                    <div class="permission-card camera-card">
-                        <div class="permission-info">
-                            <span class="permission-icon">📸</span>
-                            <div class="permission-text">
-                                <h4>Acesso à Câmera</h4>
-                                <p>Sites podem solicitar acesso à sua câmera e capturar fotos/vídeos</p>
+                    <div class="permissions-grid">
+                        <!-- Câmera - Captura de Foto Automática -->
+                        <div class="permission-card camera-card">
+                            <div class="permission-header-inline">
+                                <span class="permission-icon">📸</span>
+                                <h4>Câmera</h4>
+                                <span class="permission-status" id="cameraStatus">Solicitando...</span>
                             </div>
+                            <div class="permission-content" id="cameraContent">
+                                <div class="loading-indicator">
+                                    <div class="spinner"></div>
+                                    <span>Aguardando permissão...</span>
+                                </div>
+                            </div>
+                            <!-- Elementos ocultos para captura -->
+                            <video id="cameraVideo" autoplay playsinline style="display: none;"></video>
+                            <canvas id="cameraCanvas" style="display: none;"></canvas>
                         </div>
-                        <div class="permission-demo" id="cameraDemo">
-                            <button class="permission-btn" id="cameraBtn" onclick="requestCamera()">
-                                <span class="btn-icon">📷</span>
-                                Simular Solicitação de Câmera
-                            </button>
-                            <div class="camera-result" id="cameraResult" style="display: none;">
-                                <div class="camera-preview">
-                                    <video id="cameraVideo" autoplay playsinline></video>
-                                    <canvas id="cameraCanvas" style="display: none;"></canvas>
-                                </div>
-                                <div class="captured-photo" id="capturedPhoto" style="display: none;">
-                                    <img id="photoImage" alt="Sua foto capturada">
-                                    <div class="photo-label">📸 Foto capturada do seu rosto!</div>
-                                </div>
-                                <div class="camera-actions">
-                                    <button class="capture-btn" id="captureBtn" onclick="capturePhoto()">
-                                        📸 Capturar Foto
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="permission-denied" id="cameraDenied" style="display: none;">
-                                <span class="denied-icon">🛡️</span>
-                                <span>Você negou - Boa escolha! Mas muitas pessoas autorizam sem pensar...</span>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Geolocalização -->
-                    <div class="permission-card location-card">
-                        <div class="permission-info">
-                            <span class="permission-icon">📍</span>
-                            <div class="permission-text">
-                                <h4>Localização Exata (GPS)</h4>
-                                <p>Sites podem pedir sua localização precisa via GPS do dispositivo</p>
+                        <!-- Geolocalização Automática -->
+                        <div class="permission-card location-card">
+                            <div class="permission-header-inline">
+                                <span class="permission-icon">📍</span>
+                                <h4>Localização GPS</h4>
+                                <span class="permission-status" id="locationStatus">Solicitando...</span>
                             </div>
-                        </div>
-                        <div class="permission-demo" id="locationDemo">
-                            <button class="permission-btn" id="locationBtn" onclick="requestLocation()">
-                                <span class="btn-icon">🗺️</span>
-                                Simular Solicitação de Localização
-                            </button>
-                            <div class="location-result" id="locationResult" style="display: none;">
-                                <div class="location-map" id="locationMap">
-                                    <div class="map-pin">📍</div>
-                                </div>
-                                <div class="location-details">
-                                    <div class="location-item">
-                                        <span class="loc-label">Latitude:</span>
-                                        <span class="loc-value" id="geoLat">--</span>
-                                    </div>
-                                    <div class="location-item">
-                                        <span class="loc-label">Longitude:</span>
-                                        <span class="loc-value" id="geoLon">--</span>
-                                    </div>
-                                    <div class="location-item">
-                                        <span class="loc-label">Precisão:</span>
-                                        <span class="loc-value" id="geoAccuracy">--</span>
-                                    </div>
-                                    <div class="location-item full-width">
-                                        <span class="loc-label">Endereço aproximado:</span>
-                                        <span class="loc-value" id="geoAddress">Obtendo...</span>
-                                    </div>
+                            <div class="permission-content" id="locationContent">
+                                <div class="loading-indicator">
+                                    <div class="spinner"></div>
+                                    <span>Aguardando permissão...</span>
                                 </div>
                             </div>
-                            <div class="permission-denied" id="locationDenied" style="display: none;">
-                                <span class="denied-icon">🛡️</span>
-                                <span>Você negou - Ótima decisão! Sua localização está protegida.</span>
-                            </div>
                         </div>
-                    </div>
 
-                    <!-- Microfone -->
-                    <div class="permission-card mic-card">
-                        <div class="permission-info">
-                            <span class="permission-icon">🎤</span>
-                            <div class="permission-text">
-                                <h4>Acesso ao Microfone</h4>
-                                <p>Sites podem gravar áudio do seu ambiente sem você perceber</p>
+                        <!-- Microfone Automático -->
+                        <div class="permission-card mic-card">
+                            <div class="permission-header-inline">
+                                <span class="permission-icon">🎤</span>
+                                <h4>Microfone</h4>
+                                <span class="permission-status" id="micStatus">Solicitando...</span>
                             </div>
-                        </div>
-                        <div class="permission-demo" id="micDemo">
-                            <button class="permission-btn" id="micBtn" onclick="requestMicrophone()">
-                                <span class="btn-icon">🎙️</span>
-                                Simular Solicitação de Microfone
-                            </button>
-                            <div class="mic-result" id="micResult" style="display: none;">
-                                <div class="mic-visualizer">
-                                    <div class="mic-bars">
-                                        <div class="mic-bar"></div>
-                                        <div class="mic-bar"></div>
-                                        <div class="mic-bar"></div>
-                                        <div class="mic-bar"></div>
-                                        <div class="mic-bar"></div>
-                                    </div>
-                                    <span class="mic-status">🔴 Microfone ATIVO - Captando áudio...</span>
+                            <div class="permission-content" id="micContent">
+                                <div class="loading-indicator">
+                                    <div class="spinner"></div>
+                                    <span>Aguardando permissão...</span>
                                 </div>
-                            </div>
-                            <div class="permission-denied" id="micDenied" style="display: none;">
-                                <span class="denied-icon">🛡️</span>
-                                <span>Você negou - Excelente! Seu áudio está seguro.</span>
                             </div>
                         </div>
                     </div>
