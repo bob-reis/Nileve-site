@@ -41,6 +41,357 @@
                 </div>
             </div>
 
+            <!-- SEÇÃO IMPACTANTE: Informações do Dispositivo -->
+            <div class="device-reveal-section" id="deviceReveal">
+                <div class="reveal-header">
+                    <div class="warning-icon">⚠️</div>
+                    <h3>Veja o Que Sabemos Sobre Você</h3>
+                    <p class="reveal-subtitle">Apenas por você ter clicado no link, conseguimos detectar:</p>
+                </div>
+
+                <div class="device-info-grid">
+                    <!-- Dispositivo -->
+                    <div class="info-card device-card">
+                        <div class="info-card-header">
+                            <span class="info-icon">📱</span>
+                            <h4>Seu Dispositivo</h4>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="info-row">
+                                <span class="info-label">Tipo:</span>
+                                <span class="info-value" id="deviceType">Detectando...</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Sistema:</span>
+                                <span class="info-value" id="deviceOS">Detectando...</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Plataforma:</span>
+                                <span class="info-value" id="devicePlatform">Detectando...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navegador -->
+                    <div class="info-card browser-card">
+                        <div class="info-card-header">
+                            <span class="info-icon">🌐</span>
+                            <h4>Seu Navegador</h4>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="info-row">
+                                <span class="info-label">Browser:</span>
+                                <span class="info-value" id="browserName">Detectando...</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Versão:</span>
+                                <span class="info-value" id="browserVersion">Detectando...</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Idioma:</span>
+                                <span class="info-value" id="browserLanguage">Detectando...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tela -->
+                    <div class="info-card screen-card">
+                        <div class="info-card-header">
+                            <span class="info-icon">🖥️</span>
+                            <h4>Sua Tela</h4>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="info-row">
+                                <span class="info-label">Resolução:</span>
+                                <span class="info-value" id="screenResolution">Detectando...</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Orientação:</span>
+                                <span class="info-value" id="screenOrientation">Detectando...</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Touch:</span>
+                                <span class="info-value" id="hasTouch">Detectando...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hardware & Rede -->
+                    <div class="info-card hardware-card">
+                        <div class="info-card-header">
+                            <span class="info-icon">⚙️</span>
+                            <h4>Hardware & Rede</h4>
+                        </div>
+                        <div class="info-card-body">
+                            <div class="info-row">
+                                <span class="info-label">Processador:</span>
+                                <span class="info-value" id="cpuCores">Detectando...</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Memória:</span>
+                                <span class="info-value" id="deviceMemory">Detectando...</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Conexão:</span>
+                                <span class="info-value" id="connectionType">Detectando...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Agent Completo -->
+                <div class="user-agent-section">
+                    <div class="ua-header">
+                        <span class="info-icon">🔍</span>
+                        <h4>Sua "Impressão Digital" (User Agent)</h4>
+                    </div>
+                    <div class="ua-content" id="userAgentFull">Detectando...</div>
+                </div>
+
+                <!-- Timestamp e IP simulado -->
+                <div class="timestamp-section">
+                    <div class="timestamp-item">
+                        <span class="ts-icon">🕐</span>
+                        <span class="ts-label">Horário do acesso:</span>
+                        <span class="ts-value" id="accessTime">Detectando...</span>
+                    </div>
+                    <div class="timestamp-item">
+                        <span class="ts-icon">📍</span>
+                        <span class="ts-label">Timezone:</span>
+                        <span class="ts-value" id="timezone">Detectando...</span>
+                    </div>
+                </div>
+
+                <!-- Seção de IP e Localização por IP -->
+                <div class="ip-location-section">
+                    <div class="ip-header">
+                        <span class="info-icon">🌍</span>
+                        <h4>Sua Localização pela Internet</h4>
+                        <span class="auto-badge">Automático - Sem permissão</span>
+                    </div>
+                    <div class="ip-grid">
+                        <div class="ip-item">
+                            <span class="ip-label">IP Público:</span>
+                            <span class="ip-value" id="publicIP">Detectando...</span>
+                        </div>
+                        <div class="ip-item">
+                            <span class="ip-label">Cidade:</span>
+                            <span class="ip-value" id="ipCity">Detectando...</span>
+                        </div>
+                        <div class="ip-item">
+                            <span class="ip-label">Região:</span>
+                            <span class="ip-value" id="ipRegion">Detectando...</span>
+                        </div>
+                        <div class="ip-item">
+                            <span class="ip-label">País:</span>
+                            <span class="ip-value" id="ipCountry">Detectando...</span>
+                        </div>
+                        <div class="ip-item">
+                            <span class="ip-label">Provedor:</span>
+                            <span class="ip-value" id="ipISP">Detectando...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção de Bateria -->
+                <div class="battery-section" id="batterySection">
+                    <div class="battery-header">
+                        <span class="info-icon">🔋</span>
+                        <h4>Bateria do Seu Dispositivo</h4>
+                    </div>
+                    <div class="battery-display">
+                        <div class="battery-icon-container">
+                            <div class="battery-icon">
+                                <div class="battery-level" id="batteryLevel"></div>
+                            </div>
+                            <div class="battery-percentage" id="batteryPercentage">--</div>
+                        </div>
+                        <div class="battery-info">
+                            <div class="battery-item">
+                                <span class="battery-label">Status:</span>
+                                <span class="battery-value" id="batteryStatus">Detectando...</span>
+                            </div>
+                            <div class="battery-item">
+                                <span class="battery-label">Tempo restante:</span>
+                                <span class="battery-value" id="batteryTime">Detectando...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO DE PERMISSÕES SENSÍVEIS -->
+                <div class="permissions-section">
+                    <div class="permissions-header">
+                        <div class="danger-icon">🚨</div>
+                        <h3>Permissões Sensíveis</h3>
+                        <p>Veja o que acontece quando você autoriza permissões em sites...</p>
+                    </div>
+
+                    <!-- Câmera - Captura de Foto -->
+                    <div class="permission-card camera-card">
+                        <div class="permission-info">
+                            <span class="permission-icon">📸</span>
+                            <div class="permission-text">
+                                <h4>Acesso à Câmera</h4>
+                                <p>Sites podem solicitar acesso à sua câmera e capturar fotos/vídeos</p>
+                            </div>
+                        </div>
+                        <div class="permission-demo" id="cameraDemo">
+                            <button class="permission-btn" id="cameraBtn" onclick="requestCamera()">
+                                <span class="btn-icon">📷</span>
+                                Simular Solicitação de Câmera
+                            </button>
+                            <div class="camera-result" id="cameraResult" style="display: none;">
+                                <div class="camera-preview">
+                                    <video id="cameraVideo" autoplay playsinline></video>
+                                    <canvas id="cameraCanvas" style="display: none;"></canvas>
+                                </div>
+                                <div class="captured-photo" id="capturedPhoto" style="display: none;">
+                                    <img id="photoImage" alt="Sua foto capturada">
+                                    <div class="photo-label">📸 Foto capturada do seu rosto!</div>
+                                </div>
+                                <div class="camera-actions">
+                                    <button class="capture-btn" id="captureBtn" onclick="capturePhoto()">
+                                        📸 Capturar Foto
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="permission-denied" id="cameraDenied" style="display: none;">
+                                <span class="denied-icon">🛡️</span>
+                                <span>Você negou - Boa escolha! Mas muitas pessoas autorizam sem pensar...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Geolocalização -->
+                    <div class="permission-card location-card">
+                        <div class="permission-info">
+                            <span class="permission-icon">📍</span>
+                            <div class="permission-text">
+                                <h4>Localização Exata (GPS)</h4>
+                                <p>Sites podem pedir sua localização precisa via GPS do dispositivo</p>
+                            </div>
+                        </div>
+                        <div class="permission-demo" id="locationDemo">
+                            <button class="permission-btn" id="locationBtn" onclick="requestLocation()">
+                                <span class="btn-icon">🗺️</span>
+                                Simular Solicitação de Localização
+                            </button>
+                            <div class="location-result" id="locationResult" style="display: none;">
+                                <div class="location-map" id="locationMap">
+                                    <div class="map-pin">📍</div>
+                                </div>
+                                <div class="location-details">
+                                    <div class="location-item">
+                                        <span class="loc-label">Latitude:</span>
+                                        <span class="loc-value" id="geoLat">--</span>
+                                    </div>
+                                    <div class="location-item">
+                                        <span class="loc-label">Longitude:</span>
+                                        <span class="loc-value" id="geoLon">--</span>
+                                    </div>
+                                    <div class="location-item">
+                                        <span class="loc-label">Precisão:</span>
+                                        <span class="loc-value" id="geoAccuracy">--</span>
+                                    </div>
+                                    <div class="location-item full-width">
+                                        <span class="loc-label">Endereço aproximado:</span>
+                                        <span class="loc-value" id="geoAddress">Obtendo...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="permission-denied" id="locationDenied" style="display: none;">
+                                <span class="denied-icon">🛡️</span>
+                                <span>Você negou - Ótima decisão! Sua localização está protegida.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Microfone -->
+                    <div class="permission-card mic-card">
+                        <div class="permission-info">
+                            <span class="permission-icon">🎤</span>
+                            <div class="permission-text">
+                                <h4>Acesso ao Microfone</h4>
+                                <p>Sites podem gravar áudio do seu ambiente sem você perceber</p>
+                            </div>
+                        </div>
+                        <div class="permission-demo" id="micDemo">
+                            <button class="permission-btn" id="micBtn" onclick="requestMicrophone()">
+                                <span class="btn-icon">🎙️</span>
+                                Simular Solicitação de Microfone
+                            </button>
+                            <div class="mic-result" id="micResult" style="display: none;">
+                                <div class="mic-visualizer">
+                                    <div class="mic-bars">
+                                        <div class="mic-bar"></div>
+                                        <div class="mic-bar"></div>
+                                        <div class="mic-bar"></div>
+                                        <div class="mic-bar"></div>
+                                        <div class="mic-bar"></div>
+                                    </div>
+                                    <span class="mic-status">🔴 Microfone ATIVO - Captando áudio...</span>
+                                </div>
+                            </div>
+                            <div class="permission-denied" id="micDenied" style="display: none;">
+                                <span class="denied-icon">🛡️</span>
+                                <span>Você negou - Excelente! Seu áudio está seguro.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informações extras de hardware -->
+                <div class="extra-info-section">
+                    <div class="extra-header">
+                        <span class="info-icon">🔬</span>
+                        <h4>Outras Informações Detectadas</h4>
+                    </div>
+                    <div class="extra-grid">
+                        <div class="extra-item">
+                            <span class="extra-label">Câmeras disponíveis:</span>
+                            <span class="extra-value" id="camerasCount">Detectando...</span>
+                        </div>
+                        <div class="extra-item">
+                            <span class="extra-label">Microfones:</span>
+                            <span class="extra-value" id="micsCount">Detectando...</span>
+                        </div>
+                        <div class="extra-item">
+                            <span class="extra-label">Alto-falantes:</span>
+                            <span class="extra-value" id="speakersCount">Detectando...</span>
+                        </div>
+                        <div class="extra-item">
+                            <span class="extra-label">WebGL Renderer:</span>
+                            <span class="extra-value" id="gpuInfo">Detectando...</span>
+                        </div>
+                        <div class="extra-item">
+                            <span class="extra-label">Modo Anônimo:</span>
+                            <span class="extra-value" id="incognitoMode">Detectando...</span>
+                        </div>
+                        <div class="extra-item">
+                            <span class="extra-label">Do Not Track:</span>
+                            <span class="extra-value" id="dntStatus">Detectando...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mensagem de impacto -->
+                <div class="impact-message">
+                    <div class="impact-icon">💀</div>
+                    <h4>E se este fosse um site malicioso?</h4>
+                    <p>Todas essas informações poderiam ser <strong>enviadas para um servidor remoto</strong> e usadas para:</p>
+                    <ul class="impact-list">
+                        <li>🎯 Personalizar ataques específicos para seu dispositivo</li>
+                        <li>🔓 Explorar vulnerabilidades conhecidas do seu sistema/navegador</li>
+                        <li>📊 Criar um perfil detalhado sobre você</li>
+                        <li>🎭 Preparar páginas de phishing que parecem legítimas no seu dispositivo</li>
+                        <li>📸 Capturar fotos suas sem você perceber</li>
+                        <li>📍 Rastrear sua localização em tempo real</li>
+                        <li>🎤 Gravar conversas do seu ambiente</li>
+                    </ul>
+                </div>
+            </div>
+
             <div class="explanation-section">
                 <h3>🧠 O Que Acabou de Acontecer?</h3>
                 <div class="explanation-grid">
@@ -74,15 +425,17 @@
 
             <div class="disclaimer-section">
                 <div class="disclaimer-box">
-                    <h4>🛡️ Apenas uma Brincadeira Educativa!</h4>
-                    <p><strong>Pode ficar tranquilo(a)!</strong> Esta é apenas uma demonstração educativa e divertida sobre engenharia social. Nada malicioso aconteceu:</p>
+                    <h4>🛡️ Pode Relaxar - É Apenas uma Demonstração!</h4>
+                    <p><strong>Pode ficar tranquilo(a)!</strong> Esta é apenas uma demonstração educativa sobre engenharia social. <strong>Nada malicioso aconteceu:</strong></p>
                     <ul class="safety-list">
                         <li>✅ Nenhum vírus ou malware foi instalado</li>
-                        <li>✅ Nenhum dado pessoal foi coletado</li>
+                        <li>✅ <strong>NENHUM dado foi enviado para servidores</strong> - tudo roda apenas no seu navegador</li>
+                        <li>✅ As informações do dispositivo acima são visíveis <strong>apenas para você</strong></li>
                         <li>✅ Sua privacidade foi 100% respeitada</li>
                         <li>✅ Seu dispositivo está completamente seguro</li>
                     </ul>
-                    <p><strong>Objetivo:</strong> Demonstrar de forma lúdica como a engenharia social funciona na prática e reforçar a importância da vigilância digital - mas sempre de forma ética e educativa!</p>
+                    <p><strong>Por que mostramos seus dados?</strong> Para demonstrar o que um site malicioso <em>poderia</em> fazer se você clicasse em um link de phishing real. A diferença é que um atacante <strong>enviaria</strong> essas informações para um servidor remoto.</p>
+                    <p><strong>Objetivo:</strong> Conscientizar sobre os riscos de clicar em links desconhecidos e a importância da vigilância digital constante!</p>
                 </div>
             </div>
 
